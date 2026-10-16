@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated.prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id  String @id @default(uuid())
+  email String  @unique
+  name  String?
+  submissions Submission[]
+}
+
+model Submission {
+  id  String @id @default(uuid())
+  verified  Boolean @default(false)
+  submittedBy User  @relation(fields: [userId], references: [id])
+  userId  String
+  date DateTime @default(now())
+}
