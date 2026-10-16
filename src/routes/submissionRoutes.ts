@@ -1,5 +1,7 @@
 import express from 'express';
 import { SubmissionController } from '../controllers/submissionController.js';
+import { createSubmissionSchema } from '../schemas/submissionSchemas.js';
+import { validateData } from '../middlewares/validationMiddleware.ts.js';
 
 const router = express.Router();
 
@@ -7,7 +9,7 @@ router.get('/', SubmissionController.getSubmissions);
 
 router.get('/:id', SubmissionController.getSubmission);
 
-router.post('/', SubmissionController.createSubmission);
+router.post('/', validateData(createSubmissionSchema), SubmissionController.createSubmission);
 
 router.delete('/:id', SubmissionController.deleteSubmission);
 
