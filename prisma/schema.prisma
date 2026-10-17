@@ -12,6 +12,7 @@ model User {
   email String  @unique
   name  String?
   password String @unique
+  isAdmin Boolean @default(false)
   submissions Submission[]
 }
 

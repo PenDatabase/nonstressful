@@ -48,9 +48,6 @@ class authService {
     if (!isEmailAlreadyExist) {
       throw new BadRequestError({ message: "User does not exist" });
     }
-
-    const hashedPassword = bcrypt.hash(submissionData.password, saltRounds);
-
     const isMatch = await bcrypt.compare(
       submissionData.password,
       isEmailAlreadyExist.password,
@@ -65,13 +62,18 @@ class authService {
     const token = jwt.sign(
       {
         id: isEmailAlreadyExist?.id,
-        isEmailAlreadyExistname: isEmailAlreadyExist?.name,
+        name: isEmailAlreadyExist?.name,
         email: isEmailAlreadyExist?.email,
+        isAdmin: isEmailAlreadyExist.isAdmin
       },
       `${secretKey}`,
       { expiresIn: "1d" },
     );
-    return {token: token};
+    return {token: token, user:{
+      name: isEmailAlreadyExist?.name,
+      email: isEmailAlreadyExist?.email,
+      isAdmin: isEmailAlreadyExist?.isAdmin
+    }};
   }
 }
 

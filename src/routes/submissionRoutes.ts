@@ -1,7 +1,7 @@
 import express from 'express';
 import { SubmissionController } from '../controllers/submissionController.js';
 import { createSubmissionSchema } from '../schemas/submissionSchemas.js';
-import { validateData } from '../middlewares/validationMiddleware.ts.js';
+import { validateData } from '../middlewares/validationMiddleware.js';
 
 const router = express.Router();
 
