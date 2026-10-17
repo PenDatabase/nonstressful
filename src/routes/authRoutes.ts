@@ -1,14 +1,12 @@
 import express from 'express';
-import { SubmissionController } from '../controllers/submissionController.js';
+import { AuthController } from '../controllers/authController.js';
+import { validateData } from '../middlewares/validationMiddleware.ts.js';
+import { createUserSchema, loginRequestSchema } from '../schemas/authSchema.js';
 
 const router = express.Router();
 
-router.get('/auth/register', SubmissionController.getSubmissions);
+router.post('/register', validateData(createUserSchema), AuthController.createUser);
+router.post('/login', validateData(loginRequestSchema), AuthController.loginUser);
 
-router.get('/:id', SubmissionController.getSubmission);
-
-router.post('/', SubmissionController.createSubmission);
-
-router.delete('/:id', SubmissionController.deleteSubmission);
 
 export default router;
