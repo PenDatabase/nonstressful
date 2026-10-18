@@ -4,10 +4,12 @@ import { S3Client } from '@aws-sdk/client-s3';
 
 export const s3 = new S3Client();
 
+const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME.toString()
+
 export const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'nonstressful-files',
+    bucket: AWS_BUCKET_NAME,
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
