@@ -10,7 +10,7 @@ class submissionController {
     }
 
     getSubmission = async (req: Request, res: Response) => {
-        const id: string = req.params.id.toString();
+        const id = req.params.id as string;
         const submission = await SubmissionService.getSubmission(id);
         res.send(submission);
     }
@@ -21,7 +21,7 @@ class submissionController {
     }
 
     deleteSubmission = async (req: Request, res: Response) => {
-        const id: string = req.params.id.toString();
+        const id = req.params.id as string;
         await SubmissionService.deleteSubmission(id);
         res.status(StatusCodes.NO_CONTENT).send();
     }

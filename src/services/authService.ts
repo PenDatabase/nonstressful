@@ -61,10 +61,13 @@ class authService {
 
     const token = jwt.sign(
       {
-        id: isRegNoAlreadyExist?.id,
-        name: isRegNoAlreadyExist?.name,
-        regNo: isRegNoAlreadyExist?.regNo,
-        isAdmin: isRegNoAlreadyExist.isAdmin
+        user:{
+
+          id: isRegNoAlreadyExist?.id,
+          name: isRegNoAlreadyExist?.name,
+          regNo: isRegNoAlreadyExist?.regNo,
+          isAdmin: isRegNoAlreadyExist.isAdmin
+        }
       },
       `${secretKey}`,
       { expiresIn: "1d" },

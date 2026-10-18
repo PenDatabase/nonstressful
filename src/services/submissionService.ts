@@ -1,5 +1,5 @@
-import { prisma } from '../lib/prisma.js';
-import { User } from '../types/user.js';
+import { prisma } from '../lib/prisma';
+import type { User } from '../types/user';
 
 
 class submissionService {

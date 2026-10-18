@@ -1,6 +1,6 @@
-import { NextFunction, Request } from "express";
+import type {Response, NextFunction, Request } from "express";
 import UnauthenticatedError from "../errors/UnauthenticatedError";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import Unauthorized from "../errors/UnauthorizedError";
 
 
@@ -16,11 +16,11 @@ export const authenticate = (req: Request, res: Response, next: NextFunction)=>{
     const tokenWithoutBearer = token.split(" ")[1];
     try{
         const secretKey = process.env.JWT_SECRET_KEY
-        const decoded = jwt.verify(tokenWithoutBearer, secretKey!)
+        const decoded = jwt.verify(tokenWithoutBearer!, secretKey!) as JwtPayload
         if(!decoded){
             throw new UnauthenticatedError({message: "Could not validate your token"})
         }
-        req.user = decoded;
+        req.user = decoded.user;
 
     } catch (error) {
         throw new UnauthenticatedError({message: "Could not validate your token"})
