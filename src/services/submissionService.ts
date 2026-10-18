@@ -1,10 +1,14 @@
 import { prisma } from '../lib/prisma.js';
+import { User } from '../types/user.js';
 
 
 class submissionService {
-    async createSubmission(data: any){
+    async createSubmission(user: User){
         return await prisma.submission.create({
-            data: data,
+            data: {
+                userId: user.id,
+                file: []
+            }
         });
     }
 

@@ -8,13 +8,13 @@ const saltRounds = 10;
 
 class authService {
   async createUser(submissionData: CreateUserRequest) {
-    const isEmailAllReadyExist = await prisma.user.findFirst({
+    const isRegNoAllReadyExist = await prisma.user.findFirst({
       where: {
-        email: submissionData.email,
+        regNo: submissionData.regNo,
       },
     });
 
-    if (isEmailAllReadyExist) {
+    if (isRegNoAllReadyExist) {
       throw new BadRequestError({ message: "User already exists" });
     }
 
@@ -25,7 +25,7 @@ class authService {
 
     const newUser = await prisma.user.create({
       data: {
-        email: submissionData.email,
+        regNo: submissionData.regNo,
         name: submissionData.name,
         password: hashedPassword,
       },
@@ -33,24 +33,24 @@ class authService {
 
     return {
       id: newUser.id,
-      email: newUser.email,
+      regNo: newUser.regNo,
       name: newUser.name,
     };
   }
 
   async loginUser(submissionData: LoginRequest) {
-    const isEmailAlreadyExist = await prisma.user.findFirst({
+    const isRegNoAlreadyExist = await prisma.user.findFirst({
       where: {
-        email: submissionData.email,
+        regNo: submissionData.regNo,
       },
     });
 
-    if (!isEmailAlreadyExist) {
+    if (!isRegNoAlreadyExist) {
       throw new BadRequestError({ message: "User does not exist" });
     }
     const isMatch = await bcrypt.compare(
       submissionData.password,
-      isEmailAlreadyExist.password,
+      isRegNoAlreadyExist.password,
     );
 
     if (!isMatch) {
@@ -61,18 +61,18 @@ class authService {
 
     const token = jwt.sign(
       {
-        id: isEmailAlreadyExist?.id,
-        name: isEmailAlreadyExist?.name,
-        email: isEmailAlreadyExist?.email,
-        isAdmin: isEmailAlreadyExist.isAdmin
+        id: isRegNoAlreadyExist?.id,
+        name: isRegNoAlreadyExist?.name,
+        regNo: isRegNoAlreadyExist?.regNo,
+        isAdmin: isRegNoAlreadyExist.isAdmin
       },
       `${secretKey}`,
       { expiresIn: "1d" },
     );
     return {token: token, user:{
-      name: isEmailAlreadyExist?.name,
-      email: isEmailAlreadyExist?.email,
-      isAdmin: isEmailAlreadyExist?.isAdmin
+      name: isRegNoAlreadyExist?.name,
+      regNo: isRegNoAlreadyExist?.regNo,
+      isAdmin: isRegNoAlreadyExist?.isAdmin
     }};
   }
 }

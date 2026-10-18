@@ -1,10 +1,10 @@
 export interface LoginRequest{
-    email:string;
+    regNo:string;
     password:string;
 }
 
 export interface CreateUserRequest{
-    email:string;
+    regNo:string;
     name:string;
     password: string
 }

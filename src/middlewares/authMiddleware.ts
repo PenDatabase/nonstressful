@@ -13,7 +13,6 @@ export const authenticate = (req: Request, res: Response, next: NextFunction)=>{
         throw new UnauthenticatedError({message:"No token provided"})
     }
     
-    console.log("Heyyyyyyy");
     const tokenWithoutBearer = token.split(" ")[1];
     try{
         const secretKey = process.env.JWT_SECRET_KEY
