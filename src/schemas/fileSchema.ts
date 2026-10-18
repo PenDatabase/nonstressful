@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { FileType } from '../../generated.prisma/enums';
+import { FileType } from '../generated.prisma/enums.js';
 
 export const FileSchema = z.object({
     type: z.enum(FileType),

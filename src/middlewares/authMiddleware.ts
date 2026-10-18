@@ -1,7 +1,7 @@
 import type {Response, NextFunction, Request } from "express";
-import UnauthenticatedError from "../errors/UnauthenticatedError";
+import UnauthenticatedError from "../errors/UnauthenticatedError.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import Unauthorized from "../errors/UnauthorizedError";
+import Unauthorized from "../errors/UnauthorizedError.js";
 
 
 

@@ -1,9 +1,9 @@
 import express from 'express';
 import { authenticate } from '../middlewares/authMiddleware.js';
-import { upload } from '../common/services/s3Service';
-import { FileController } from '../controllers/fileController';
-import { FileSchema } from '../schemas/fileSchema';
-import { validateData } from '../middlewares/validationMiddleware';
+import { upload } from '../common/services/s3Service.js';
+import { FileController } from '../controllers/fileController.js';
+import { FileSchema } from '../schemas/fileSchema.js';
+import { validateData } from '../middlewares/validationMiddleware.js';
 
 const router = express.Router();
 

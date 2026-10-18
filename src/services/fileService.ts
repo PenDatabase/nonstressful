@@ -1,5 +1,5 @@
-import { prisma } from "../lib/prisma";
-import type { FileBody } from "../schemas/fileSchema";
+import { prisma } from "../lib/prisma.js";
+import type { FileBody } from "../schemas/fileSchema.js";
 
 class fileService{
     async uploadFile(body: FileBody, fileData:any){
