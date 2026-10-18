@@ -6,8 +6,7 @@ class submissionService {
     async createSubmission(user: User){
         return await prisma.submission.create({
             data: {
-                userId: user.id,
-                file: []
+                userId: user.id
             }
         });
     }
