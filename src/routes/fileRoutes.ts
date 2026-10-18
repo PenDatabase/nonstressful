@@ -8,3 +8,5 @@ import { validateData } from '../middlewares/validationMiddleware.js';
 const router = express.Router();
 
 router.post('/upload', authenticate, upload.single('file'), validateData(FileSchema), FileController.upload);
+
+export default router
