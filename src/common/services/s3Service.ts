@@ -1,20 +1,23 @@
-import multer from 'multer';
-import multerS3 from 'multer-s3';
-import { S3Client } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, S3 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-export const s3 = new S3Client();
-
-const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME ?? '';
-
-export const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: AWS_BUCKET_NAME,
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
+class s3Service{
+  s3 = new S3Client({
+    region: process.env.AWS_DEFAULT_REGION ?? '',
+    endpoint: process.env.AWS_ENDPOINT_URL ?? '',
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? ''
     },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
-  })
-})
+  });
+
+  getUploadUrl = async (key: string) => {
+    const command = new PutObjectCommand({
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key,
+    });
+    return getSignedUrl(this.s3, command, { expiresIn: 3600 });
+  }
+}
+
+export const S3Service = new s3Service();

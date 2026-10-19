@@ -2,13 +2,15 @@ import type {Request, Response} from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { FileService } from '../services/fileService.js';
 
-class fileController {
-    upload = async (req: Request, res: Response) => {
-        if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(400).send('No files were uploaded.');
-        }
+class fileController {    
+    getUploadUrl = async (req: Request, res: Response) => {
+        const fileName = req.body;
+        const fileUploadDetail = await FileService.getUploadUrl(fileName);
+        res.send(fileUploadDetail);
+    }
 
-        const file = await FileService.uploadFile(req.body, req.file);
+    createFile = async(req: Request, res: Response) => {
+        const file = await FileService.createFile(req.body);
         res.status(StatusCodes.CREATED).send(file);
     }
 }
