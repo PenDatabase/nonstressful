@@ -9,7 +9,12 @@ export const FileSchema = z.object({
 });
 
 export const UploadFileSchema = z.object({
-    fileName: z.string()
+    fileName: z.string(),
+    contentType: z.string()
+})
+
+export const DownloadFileSchema = z.object({
+    fileKey: z.string()
 })
 
 export type FileBody = z.infer<typeof FileSchema>;

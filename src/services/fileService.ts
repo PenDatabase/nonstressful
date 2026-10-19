@@ -4,12 +4,19 @@ import { S3Service } from "../common/services/s3Service.js";
 import crypto from 'crypto';
 
 class fileService{
-    getUploadUrl = async (fileName: string) => {
+    getUploadUrl = async (fileName: string, contentType: string) => {
         const fileKey = `uploads/${Date.now()}-${crypto.randomBytes(6).toString('hex')}-${fileName}`;
-        const fileUploadUrl = await S3Service.getUploadUrl(fileKey);
+        const fileUploadUrl = await S3Service.getUploadUrl(fileKey, contentType);
         return {
             fileUploadUrl: fileUploadUrl,
             fileKey: fileKey
+        }
+    }
+
+    getDownloadUrl = async (fileKey: string) => {
+        const fileDownloadUrl = await S3Service.getDownloadUrl(fileKey);
+        return {
+            fileDownloadUrl: fileDownloadUrl
         }
     }
 
